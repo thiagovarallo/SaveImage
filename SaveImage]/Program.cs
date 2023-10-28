@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileProviders;
 using SaveImage_.DATA;
 using SaveImage_.Repository;
 
@@ -35,6 +36,12 @@ namespace SaveImage_
             }
 
             app.UseHttpsRedirection();
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(),"Images")),
+                RequestPath = "/Images"
+            });
 
             app.UseAuthorization();
 
